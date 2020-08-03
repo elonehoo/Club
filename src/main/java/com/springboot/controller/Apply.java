@@ -1,5 +1,6 @@
 package com.springboot.controller;
 
+import com.springboot.beans.Student;
 import com.springboot.beans.SignPull;
 import com.springboot.beans.Cipher;
 import com.springboot.beans.Message;
@@ -11,6 +12,7 @@ import com.springboot.utils.UUIDUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 
 @RestController
@@ -23,7 +25,7 @@ public class Apply {
     private MessageService messageService;
 
     /**
-     * 登录
+     * 注册
      * @param map
      * @return
      */
@@ -58,18 +60,38 @@ public class Apply {
         if ( isN == 0 ){
             return "学号已经被注册了!请联系管理员";
         }
+        //创建UUID
         String id = UUIDUtils.getId();
+        //将信息插入数据库
         Message message = new Message(id,number,name,phone,clazz);
         Cipher cipher = new Cipher(id,number,number);
         SignPull signPull = new SignPull(id,number,"false","0","0","0");
         int isY = checkService.getCheckInsert(signPull);
         int isC = cipherService.getCipherInsert(cipher);
         int isM = messageService.getMessageInsert(message);
+        //判断是否插入成功
         if (isM == 1 && isY == 1 && isC == 1){
             return "注册成功!";
         }else {
             return "注册失败!请联系管理员";
         }
-
     }
+    @PostMapping("/login")
+    @CrossOrigin
+    public String login(@RequestBody HashMap<String,Object> map, HttpSession session){
+        //获取前端页面通过JSON数据传来的值
+        String account = (String) map.get("account");
+        String password = (String) map.get("password");
+        //查找是否正确
+        Cipher cipher = cipherService.getCipherLogin(account,password);
+        if (cipher == null){
+            return "登录失败!账号或者密码错误";
+        }
+        //登录成功，将数据查找
+        Message message = messageService.getMessageByNumber(account);
+        Student student = new Student(message.getMemberUUID(),account,message.getMemberName());
+        session.setAttribute("myKey",student);
+        return "登录成功";
+    }
+
 }
