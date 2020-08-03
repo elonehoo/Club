@@ -16,4 +16,11 @@ public interface MessageService {
      * @return
      */
     int getMessageInsert(Message message);
+
+    /**
+     * 通过学号查找学生的个人信息
+     * @param account
+     * @return
+     */
+    Message getMessageByNumber(String account);
 }

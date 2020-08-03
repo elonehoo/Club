@@ -5,12 +5,16 @@ import com.springboot.beans.Cipher;
 import com.springboot.mapper.SignPullMapper;
 import com.springboot.mapper.CipherMapper;
 import com.springboot.mapper.MessageMapper;
+import com.springboot.service.CipherService;
 import com.springboot.service.MessageService;
 import com.springboot.utils.RegesUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @SpringBootTest
 class ApplyApplicationTests {
@@ -24,6 +28,9 @@ class ApplyApplicationTests {
 
     @Resource
     private MessageService messageService;
+
+    @Resource
+    private CipherService cipherService;
 
     @Test
     void contextLoads() {
@@ -55,5 +62,16 @@ class ApplyApplicationTests {
     void contextLoads4() {
         int id = messageService.getMessageById("123");
         System.out.println(id);
+    }
+    @Test
+    void contextLoads5() {
+        String ni = "2019002125";
+        Map<String,Object> map = new HashMap<>();
+
+        map.put("memberNumber",ni);
+        map.put("memberCipher",ni);
+
+        List<Cipher> list = cipherMapper.selectByMap(map);
+        System.out.println(list.get(0));
     }
 }

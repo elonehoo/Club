@@ -38,4 +38,13 @@ public class MessageServiceImpl implements MessageService {
         int insert = messageMapper.insert(message);
         return insert;
     }
+
+    @Override
+    public Message getMessageByNumber(String account) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("memberNumber",account);
+        List<Message> list = messageMapper.selectByMap(map);
+        Message message = list.get(0);
+        return message;
+    }
 }
