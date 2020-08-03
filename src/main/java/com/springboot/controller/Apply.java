@@ -89,9 +89,15 @@ public class Apply {
         }
         //登录成功，将数据查找
         Message message = messageService.getMessageByNumber(account);
-        Student student = new Student(message.getMemberUUID(),account,message.getMemberName());
-        session.setAttribute("myKey",student);
+        session.setAttribute("my",account);
         return "登录成功";
+    }
+
+    @PostMapping("/session")
+    @CrossOrigin
+    public String getSession(HttpSession session){
+        String data = (String) session.getAttribute("my");
+        return data;
     }
 
 }
