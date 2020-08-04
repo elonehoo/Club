@@ -1,9 +1,4 @@
 spring:
-#  redis:
-#    host: 127.0.0.1
-#    port: 6379
-#  session:
-#    store-type: redis
   datasource:
     username: root
     password: 123456
@@ -22,6 +17,10 @@ server:
       timeout: 30m
       cookie:
         path: /
+    context-path: /apply
+  port: 8081
+
+
 
 mybatis-plus:
   mapper-locations: classpath*:com/springboot/mapper/*.xml

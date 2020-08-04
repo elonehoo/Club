@@ -17,4 +17,21 @@ public interface CipherService {
      * @return
      */
     Cipher getCipherLogin(String account, String password);
+
+    /**
+     * 查找这个学生的账号和密码
+     * @param uuid
+     * @return
+     */
+    Cipher getCipherById(String uuid);
+
+    /**
+     * 修改这个学生的密码
+     * @param cipher
+     * @param oldPassword
+     * @param new_password_one
+     * @param new_password_two
+     * @return
+     */
+    String getCipherUpdate(Cipher cipher, String oldPassword, String new_password_one, String new_password_two);
 }

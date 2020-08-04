@@ -10,6 +10,11 @@ public class SignPull {
     private String memberUUID;
     @TableField(value = "memberNumber")
     private String memberNumber;
+    /**
+     * false - 未签到
+     * maybe - 签到但是没有同意
+     * true - 正在签到
+     */
     @TableField(value = "checkIS")
     private String checkIS;
     @TableField(value = "checkStart")
